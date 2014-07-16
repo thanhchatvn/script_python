@@ -1,12 +1,17 @@
 import subprocess
+import os
 
-list_path = subprocess.check_output(['find', '/Volumes/workspace/source/gitlab/8-0', '-name', '*vi.po'], shell=False)
+path = os.getcwd()
+arg = '*vi.po'
+
+list_path = subprocess.check_output(['find', path, '-name', arg], shell=False)
 
 sum_path = []
 print '-' * 100
 list_all = list_path.split('\n')
 
-trans_path = '/Volumes/workspace/source/gitlab/8-0/translate/'
+subprocess.check_output(['mkdir', path + '/translate'], shell=False)
+trans_path = path + '/translate'
 
 for path in list_all:
     try:
@@ -15,7 +20,7 @@ for path in list_all:
         print 'open --> %s' % path
         ifile = open(path, 'rb')
 
-        path_out = trans_path + path_ls + '.po'
+        path_out = trans_path + '/' + path_ls + '.po'
 
         print 'outfile --> %s' % path_out
         ofile = open(path_out, 'wb')
